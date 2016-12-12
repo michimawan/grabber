@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/auth', [
+    'as' => 'grabber.oauth',
+    'uses' => 'GrabbersController@auth'
+]);
+
+Route::get('/send', [
+    'as' => 'grabber.send',
+    'uses' => 'GrabbersController@send'
+]);
