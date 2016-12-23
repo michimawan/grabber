@@ -28,10 +28,13 @@ class Grabber
 
             $crawler = new Crawler($response);
             $this->domParser->setCrawler($crawler);
-            $result = $this->domParser->getSiblings($willGrab['element']);
-            $result = str_replace('.', '', $result);
-            $result = str_replace(',', '.', $result);
-            $value[] = (double) $result;
+            foreach ($willGrab['elements'] as $element) {
+                $result = $this->domParser->getSiblings($element);
+
+                $result = str_replace('.', '', $result);
+                $result = str_replace(',', '.', $result);
+                $value[] = (double) $result;
+            }
         }
 
         return $value;

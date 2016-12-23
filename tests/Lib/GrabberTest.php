@@ -31,13 +31,15 @@ class GrabberTest extends BaseLibTest
                 ->with($grab['url'])
                 ->andReturn('foo');
 
-            $this->domParser
-                ->shouldReceive('getSiblings')
-                ->with($grab['element'])
-                ->once()
-                ->andReturn($rand);
+            foreach ($grab['elements'] as $element) {
+                $this->domParser
+                    ->shouldReceive('getSiblings')
+                    ->with($element)
+                    ->once()
+                    ->andReturn($rand);
 
-            $expected[] = $rand;
+                $expected[] = $rand;
+            }
         }
 
         $this->grabber = Mockery::mock(Grabber::class, [$this->curler, $this->domParser])->makePartial();

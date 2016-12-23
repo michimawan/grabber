@@ -3,10 +3,16 @@
 return [
     'group_1' => [
         'url' => 'www.google.com',
-        'element' => 'foo_element',
+        'elements' => [
+            'foo0_element',
+            'foo1_element'
+        ],
     ],
     'group_2' => [
         'url' => 'www.google2.com',
-        'element' => 'bar_element',
+        'elements' => [
+            'bar0_element',
+            'bar1_element'
+        ],
     ],
 ];
