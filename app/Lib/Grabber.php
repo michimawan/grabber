@@ -9,25 +9,29 @@ use Config;
 
 class Grabber
 {
+    public function __construct(Curler $curler, DomParser $domParser)
+    {
+        $this->curler = $curler;
+        $this->domParser = $domParser;
+    }
+
     public function grab()
     {
         $curl = new Curl;
+        $this->curler->setCurl($curl);
 
-        $curler = new Curler;
-        $curler->setCurl($curl);
+        $grabbed = Config::get('grabber');
 
-        $response = $curler->curl();
+        $value = [];
+        foreach ($grabbed as $willGrab) {
+            $response = $this->curler->curl($willGrab['url']);
 
-        $crawler = new Crawler($response);
-        $domParser = new DomParser;
-        $domParser->setCrawler($crawler);
-        $elements = $domParser->getSiblings(Config::get('grabber.element'));
-
-        $value = 0;
-        foreach ($elements as $idx => $element) {
-            if ($idx == 0) {
-                $value = $element->nodeValue;
-            }
+            $crawler = new Crawler($response);
+            $this->domParser->setCrawler($crawler);
+            $result = $this->domParser->getSiblings($willGrab['element']);
+            $result = str_replace('.', '', $result);
+            $result = str_replace(',', '.', $result);
+            $value[] = (double) $result;
         }
 
         return $value;

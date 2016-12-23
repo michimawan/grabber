@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Lib\DomParser;
+use App\Lib\Curler;
 use Carbon\Carbon;
 use Redirect;
 use Config;
@@ -19,10 +21,10 @@ class GrabbersController extends Controller
         if ($r = $this->checkSession($request)) {
             return $r;
         }
-        $content = [
-            (string) Carbon::now()->toDateTimeString(),
-            (double) (new Grabber)->grab(),
-        ];
+        $domParser = new DomParser;
+        $curler = new Curler;
+        $grabber = new Grabber($curler, $domParser);
+        $content = array_merge([(string) Carbon::now()->toDateTimeString()], $grabber->grab());
 
         $newRow = [
             $content

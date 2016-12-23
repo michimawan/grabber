@@ -18,9 +18,8 @@ class Curler
         $this->curl = $curl;
     }
 
-    public function curl()
+    public function curl($url)
     {
-        $url = Config::get('grabber.url');
         $this->curl->get($url);
 
         if ($this->curl->http_status_code >= 200 &&

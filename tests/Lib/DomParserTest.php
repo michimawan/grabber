@@ -28,7 +28,7 @@ class DomParserTest extends BaseLibTest
             ->with($element)
             ->once()
             ->andReturn($crawler);
-        $crawler->shouldReceive('siblings')
+        $crawler->shouldReceive('html')
             ->once()
             ->andReturn('foo');
 

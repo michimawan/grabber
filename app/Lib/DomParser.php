@@ -24,6 +24,6 @@ class DomParser
 
     public function getSiblings(string $element)
     {
-        return $this->crawler->filter($element)->siblings();
+        return $this->crawler->filter($element)->html();
     }
 }
